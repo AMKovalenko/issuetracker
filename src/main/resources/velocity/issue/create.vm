@@ -1,0 +1,46 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+
+    <h1>$msg.get("ISSUES_CREATE")</h1>
+
+    <div class="issue">
+
+        <form action="/issue/" method="post">
+            <table>
+                <tbody>
+                <tr padding-top: 30px>
+                    <td><label>$msg.get("ISSUE_TITLE")</label></td>
+                    <td>
+                        <input type="text" required name="$msg.get("ISSUE_TITLE")"/>
+                    </td>
+                </tr>
+                <tr padding-top: 30px>
+                    <td><label>$msg.get("ISSUE_AUTHOR")</label></td>
+                    <td>
+                        <input type="text" required name="$msg.get("ISSUE_AUTHOR")"/>
+                    </td>
+                </tr>
+                <tr padding-top: 30px>
+                    <td colspan="2"><label>$msg.get("ISSUE_DESCRIPTION")</label></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <textarea name="$msg.get("ISSUE_DESCRIPTION")" rows="20" cols="60" required></textarea>
+                    </td>
+                </tr>
+                <tr padding-top: 20px>
+                    <td>
+                        <input type="submit" value="$msg.get("ISSUE_SAVE")">
+                    </td>
+                    <td>
+                        <form action="/issues/" method="get">
+                            <button type="submit">$msg.get("ISSUE_CANCEL")</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+
+#end

@@ -1,0 +1,95 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+    #if($issue)
+    <h1>$issue.getTitle()</h1>
+
+    <div class="issue">
+        <table>
+            <tbody>
+            <tr>
+                <td>Status</td><td>$issue.getState()</td>
+            </tr>
+            <tr>
+                <td>Start Date</td><td>$issue.getCreationdate()</td>
+            </tr>
+            <tr>
+                <td>Author</td><td>$issue.getAuthor()</td>
+            </tr>
+            <tr>
+                <td colspan="2" style="font-weight: 600; padding-top: 30px">Description</td>
+            </tr>
+            <tr>
+                <td colspan="2">$issue.getDescription()</td>
+            </tr>
+
+            #if($issue.getCommentsById())
+                <tr>
+                    <td colspan="2" style="font-weight: 600; padding-top: 30px">Comments :</td>
+                </tr>
+                #foreach($comment in $issue.getCommentsById())
+                <div class="col">
+                    <tr>
+                        <td colspan="2" align="left"><b>Updated by  $comment.getAuthor()  $comment.getFormattedDate()</b></td>
+                    </tr>
+                    #if($comment.getTransition())
+                        <tr>
+                            <td colspan="2" align="left"  style="text-indent: 40px"><i>Status changed to $comment.getTransition()</i></td>
+                        </tr>
+                    #end
+                    <tr>
+                        <td colspan="2" align="left" style="padding-bottom: 30px">$comment.getText()</td>
+                    </tr>
+                </div>
+                #end
+            #end
+            </tbody>
+        </table>
+
+
+        <form action="/issues/comment/$issue.getId()" method="post">
+        <table>
+            <tbody>
+            <tr padding-top: 30px>
+                <td colspan="2" style="font-weight: 600">Add comment :</td>
+            </tr>
+            <tr>
+
+                <td><label>$msg.get("COMMENTS_TRANSITION")</label></td>
+                <td>
+                    <select name="Transition">
+                    <option></option>
+                    <option>Signed</option>
+                    <option>Endorsed</option>
+                    <option>Closed</option>
+                    <option>Resolved</option>
+                    <option>Cancelled</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label>$msg.get("COMMENTS_AUTHOR")</label></td>
+                <td>
+                    <input type="text" name="Author" value="" required/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><label>$msg.get("COMMENTS_TEXT")</label></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <textarea name="Text" rows="20" cols="60" required></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                <input type="submit" value="$msg.get("COMMENTS_BUTTON_ADD")">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </form>
+    </div>
+
+    #else
+    <h1>$msg.get("ISSUES_ISSUE_NOT_FOUND")</h1>
+    #end
+#end

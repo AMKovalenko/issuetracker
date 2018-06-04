@@ -1,0 +1,27 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+<h1>$msg.get("ISSUES_HEADING_ALL")</h1>
+<div class="row row-3">
+    #if($issues)
+        <table align="center" width="700" >
+            <tbody>
+            #foreach($issue in $issues)
+                <div class="col">
+                    <tr>
+                        <td width="65%">
+                            <a class="issue" href="/issues/$issue.getId()">$issue.getTitle()</a>
+                        </td>
+                        <td width="20%" align="center">$issue.getState()</td>
+                        <td width="15%" align="right">$issue.getCreationdate()</td>
+##                       $msg.get("ISSUES_CAPTION", $issue.getTitle(), $issue.getCreationdate())
+                    </tr>
+                </div>
+            #end
+            </tbody>
+        </table>
+    #else
+        <h1>$msg.get("ISSUES_ISSUE_NOT_FOUND")</h1>
+    #end
+
+</div>
+#end
