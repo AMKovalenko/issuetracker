@@ -4,20 +4,19 @@
     <h1>$msg.get("ISSUES_CREATE")</h1>
 
     <div class="issue">
-
-        <form action="/issue/" method="post">
             <table>
-                <tbody>
+                <tr>
+                <form onsubmit="return checkForm(this)" action="/issue/" method="post">
                 <tr padding-top: 30px>
                     <td><label>$msg.get("ISSUE_TITLE")</label></td>
                     <td>
-                        <input type="text" required name="$msg.get("ISSUE_TITLE")"/>
+                        <input type="text" id="title" required name="$msg.get("ISSUE_TITLE")"/>
                     </td>
                 </tr>
                 <tr padding-top: 30px>
                     <td><label>$msg.get("ISSUE_AUTHOR")</label></td>
                     <td>
-                        <input type="text" required name="$msg.get("ISSUE_AUTHOR")"/>
+                        <input type="text" id="author" value="$currentUser" required name="$msg.get("ISSUE_AUTHOR")"/>
                     </td>
                 </tr>
                 <tr padding-top: 30px>
@@ -25,22 +24,44 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <textarea name="$msg.get("ISSUE_DESCRIPTION")" rows="20" cols="60" required></textarea>
+                        <textarea id="description" name="$msg.get("ISSUE_DESCRIPTION")" rows="20" cols="60" required></textarea>
                     </td>
                 </tr>
                 <tr padding-top: 20px>
                     <td>
                         <input type="submit" value="$msg.get("ISSUE_SAVE")">
                     </td>
+                </tr>
+                </form>
+                <tr>
                     <td>
                         <form action="/issues/" method="get">
+                            #if($currentUser)
+                                <input type="hidden" name="currentUser" value="$currentUser">
+                            #end
                             <button type="submit">$msg.get("ISSUE_CANCEL")</button>
                         </form>
                     </td>
                 </tr>
-                </tbody>
             </table>
-        </form>
+
     </div>
 
+<script type="text/javascript">
+    function checkForm(form) {
+        if (document.getElementById('title').value.replace(/[\s]+/g, '') === ''){
+            alert ('Field "Title" sould not be empty or consist of whitespaces only!');
+            return false;
+        }
+        if (document.getElementById('author').value.replace(/[\s]+/g, '') === ''){
+            alert ('Field "Author" sould not be empty or consist of whitespaces only!');
+            return false;
+        }
+        if (document.getElementById('description').value.replace(/[\s]+/g, '') === ''){
+            alert ('Field "Description" sould not be empty or consist of whitespaces only!');
+            return false;
+        }
+        return true;
+    }
+</script>
 #end

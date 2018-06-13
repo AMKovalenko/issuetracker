@@ -7,14 +7,14 @@ import java.util.List;
 
 public interface IssueDao {
 
-    Integer createIssue(Issue o);
+    Integer createIssue(Issue o) throws Exception;
 
-    Issue deleteIssueByID(Integer id);
+    int deleteIssueByID(Integer id) throws Exception;
 
-    void updateIssue(Issue issue);
+    void updateIssue(Issue issue) throws Exception;
 
-    List<Issue> getAllIssues();
+    List<Issue> getAllIssues() throws Exception;
 
-    Issue getIssueByID(Integer id);
+    Issue getIssueByID(Integer id) throws Exception;
 
 }

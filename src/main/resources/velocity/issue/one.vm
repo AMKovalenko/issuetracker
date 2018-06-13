@@ -7,16 +7,16 @@
         <table>
             <tbody>
             <tr>
-                <td>Status</td><td>$issue.getState()</td>
+                <td>$msg.get("ISSUE_STATUS")</td><td>$issue.getState()</td>
             </tr>
             <tr>
-                <td>Start Date</td><td>$issue.getCreationdate()</td>
+                <td>$msg.get("ISSUE_START_DATE")</td><td>$issue.getCreationdate()</td>
             </tr>
             <tr>
-                <td>Author</td><td>$issue.getAuthor()</td>
+                <td>$msg.get("ISSUE_AUTHOR")</td><td>$issue.getAuthor()</td>
             </tr>
             <tr>
-                <td colspan="2" style="font-weight: 600; padding-top: 30px">Description</td>
+                <td colspan="2" style="font-weight: 600; padding-top: 30px">$msg.get("ISSUE_DESCRIPTION")</td>
             </tr>
             <tr>
                 <td colspan="2">$issue.getDescription()</td>
@@ -24,7 +24,7 @@
 
             #if($issue.getCommentsById())
                 <tr>
-                    <td colspan="2" style="font-weight: 600; padding-top: 30px">Comments :</td>
+                    <td colspan="2" style="font-weight: 600; padding-top: 30px">$msg.get("COMMENTS")</td>
                 </tr>
                 #foreach($comment in $issue.getCommentsById())
                 <div class="col">
@@ -45,49 +45,77 @@
             </tbody>
         </table>
 
-
-        <form action="/issues/comment/$issue.getId()" method="post">
         <table>
             <tbody>
+            <form onsubmit="return checkForm(this)" action="/issues/comment/$issue.getId()" method="post">
             <tr padding-top: 30px>
-                <td colspan="2" style="font-weight: 600">Add comment :</td>
+                <td colspan="2" style="font-weight: 600">$msg.get("COMMENTS_ADD_COMMENT")</td>
             </tr>
-            <tr>
-
-                <td><label>$msg.get("COMMENTS_TRANSITION")</label></td>
-                <td>
-                    <select name="Transition">
-                    <option></option>
-                    <option>Signed</option>
-                    <option>Endorsed</option>
-                    <option>Closed</option>
-                    <option>Resolved</option>
-                    <option>Cancelled</option>
-                    </select>
-                </td>
-            </tr>
+            #if($issue.getState() != "CLOSED" && $issue.getState() != "RESOLVED" && $issue.getState() != "CANCELLED")
+                <tr>
+                    <td><label>$msg.get("COMMENTS_TRANSITION")</label></td>
+                    <td>
+                        <select name="Transition">
+                        <option></option>
+                        <option>Signed</option>
+                        <option>Endorsed</option>
+                        <option>Closed</option>
+                        <option>Resolved</option>
+                        <option>Cancelled</option>
+                        </select>
+                    </td>
+                </tr>
+            #end
             <tr>
                 <td><label>$msg.get("COMMENTS_AUTHOR")</label></td>
                 <td>
-                    <input type="text" name="Author" value="" required/></td>
+                    <input type="text" id="author" name="Author" value="$currentUser" required/></td>
             </tr>
             <tr>
                 <td colspan="2"><label>$msg.get("COMMENTS_TEXT")</label></td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <textarea name="Text" rows="20" cols="60" required></textarea>
+                    <textarea name="Text" id="description" rows="20" cols="60" required></textarea>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
-                <input type="submit" value="$msg.get("COMMENTS_BUTTON_ADD")">
+                    #if($currentUser)
+                        <input type="hidden" name="currentUser" value="$currentUser">
+                    #end
+                    <input type="submit" value="$msg.get("COMMENTS_BUTTON_ADD")">
                 </td>
             </tr>
+            </form>
+                <tr>
+                    <td colspan="2">
+                        <form id="loginForm" action="/issues/" method="get">
+                            #if($currentUser)
+                                <input type="hidden" name="currentUser" value="$currentUser">
+                            #end
+                            <input type="submit" value="$msg.get("COMMENTS_GO_TO_ISSUE_LIST")">
+                         </form>
+                    </td>
+                </tr>
             </tbody>
         </table>
-        </form>
+
     </div>
+
+    <script type="text/javascript">
+        function checkForm(form) {
+            if (document.getElementById('author').value.trim() === ''){
+                alert ('Field "Author" sould not be empty or consist of whitespaces only!');
+                return false;
+            }
+            if (document.getElementById('description').value.trim() === ''){
+                alert ('Field "Text" sould not be empty or consist of whitespaces only!');
+                return false;
+            }
+            return true;
+        }
+    </script>
 
     #else
     <h1>$msg.get("ISSUES_ISSUE_NOT_FOUND")</h1>

@@ -2,26 +2,54 @@
 #@mainLayout()
 <h1>$msg.get("ISSUES_HEADING_ALL")</h1>
 <div class="row row-3">
-    #if($issues)
+
         <table align="center" width="700" >
             <tbody>
-            #foreach($issue in $issues)
-                <div class="col">
+            <div class="col">
+            #if($issues.size() > 0)
+                #foreach($issue in $issues)
                     <tr>
-                        <td width="65%">
-                            <a class="issue" href="/issues/$issue.getId()">$issue.getTitle()</a>
+                        <td width="60%">
+
+                            <form method="get" name="getIssueForm">
+                                <input type="hidden" name="currentUser" value="$currentUser">
+                            </form>
+                            <a href="/issue/$issue.getId()" class="issue" onclick="document.getIssueForm.submit();">$issue.getTitle()</a>
+
                         </td>
-                        <td width="20%" align="center">$issue.getState()</td>
+                        <td width="15%" align="center">$issue.getState()</td>
                         <td width="15%" align="right">$issue.getCreationdate()</td>
-##                       $msg.get("ISSUES_CAPTION", $issue.getTitle(), $issue.getCreationdate())
+                        <td width="10%">
+                            <a href="/issues/" onclick="deleteIssue($issue.getId())" class="issue">$msg.get("ISSUE_DELETE")</a>
+                        </td>
                     </tr>
-                </div>
+                #end
+            #else
+                <h1>$msg.get("ISSUES_ISSUE_NOT_FOUND")</h1>
             #end
+                    <tr>
+                        <td colspan="4">
+                            <form id="loginForm" method="get" name="addIssueForm">
+                                <input type="hidden" name="currentUser" value="$currentUser">
+                            </form>
+                            <a href="/issue/" class="issue" onclick="document.addIssueForm.submit();">$msg.get("ISSUES_ADD_ONE_MORE")</a>
+                        </td>
+                    </tr>
+
+            </div>
             </tbody>
         </table>
-    #else
-        <h1>$msg.get("ISSUES_ISSUE_NOT_FOUND")</h1>
-    #end
 
 </div>
+<script>
+    function deleteIssue(identifier){
+        $.ajax({
+            type: "DELETE",
+            url: "/issue/" + identifier,
+            data: "$currentUser"
+        });
+    }
+</script>
+
+<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 #end

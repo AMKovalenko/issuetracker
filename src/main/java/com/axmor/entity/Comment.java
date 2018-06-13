@@ -106,5 +106,14 @@ public class Comment {
         return result;
     }
 
-
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", creationdate=" + creationdate +
+                ", text='" + text + '\'' +
+                ", author='" + author + '\'' +
+                ", transition='" + transition + '\'' +
+                '}';
+    }
 }

@@ -1,40 +1,29 @@
 package com.axmor.util;
 
 public class Path {
-
+    /**
+     * Storage for paths to templates for rendering pages.
+     */
     public interface Template {
         String ISSUES_ALL = "velocity/issue/all.vm";
         String ISSUE = "velocity/issue/create.vm";
         String ISSUES_ONE = "velocity/issue/one.vm";
         String NOT_FOUND = "/velocity/notFound.vm";
+        String LOGIN = "/velocity/login/login.vm";
+        String REGISTER = "/velocity/login/register.vm";
     }
 
-    public static class Web {
-
-//        public static final String INDEX = "/index/";
-//        public static final String LOGIN = "/login/";
-//        public static final String LOGOUT = "/logout/";
-        public static final String ISSUES = "/issues/";
-        public static final String ISSUE = "/issue/";
-        public static final String ONE_ISSUE = "/issues/:id";
-        public static final String ADD_COMMENT = "/issues/comment/:id";
-
-//        public String getINDEX(){
-//            return INDEX;
-//        }
-//
-//        public String getLOGIN(){
-//            return LOGIN;
-//        }
-//        public String getLOGOUT(){
-//            return LOGOUT;
-//        }
-        public String getIssues(){
-            return ISSUES;
-        }
-//        public String getONE_BOOK(){
-//
-//            return ONE_BOOK;
-//        }
+    /**
+     * Storage for paths for creation links.
+     */
+    public interface Web {
+        String LOGIN = "/login/";
+        String REGISTER = "/register/";
+        String LOGOUT = "/logout/";
+        String ISSUES = "/issues/";
+        String ISSUE = "/issue/";
+        String ONE_ISSUE = "/issue/:id";
+        String DEL_ISSUE = "/issue/:id";
+        String ADD_COMMENT = "/issues/comment/:id";
     }
 }

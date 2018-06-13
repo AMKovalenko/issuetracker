@@ -12,24 +12,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.axmor.util.RequestUtil.getSessionCurrentUser;
-import static com.axmor.util.RequestUtil.getSessionLocale;
+
 
 public class ViewUtil {
 
-    // Renders a template given a model and a request
-    // The request is needed to check the user session for language settings
-    // and to see if the user is logged in
+    /**
+     * Renders a template given a model and a request.
+     * The request is needed to see if the user is logged in.
+     *
+     * @param request - instance of Request class. The storage for session with current user information
+     * @param model - storage of variables for rendering page
+     * @param templatePath - path to velocity template for rendering page
+     * @return - String value for building HTML page
+     */
     public static String render(Request request, Map<String, Object> model, String templatePath) {
-        model.put("msg", new MessageBundle(getSessionLocale(request)));
+        model.put("msg", new MessageBundle());
         model.put("currentUser", getSessionCurrentUser(request));
         model.put("WebPath", Path.Web.class); // Access application URLs from templates
         return strictVelocityEngine().render(new ModelAndView(model, templatePath));
     }
-
-    public static Route notAcceptable = (Request request, Response response) -> {
-        response.status(HttpStatus.NOT_ACCEPTABLE_406);
-        return new MessageBundle(getSessionLocale(request)).get("ERROR_406_NOT_ACCEPTABLE");
-    };
 
     public static Route notFound = (Request request, Response response) -> {
         response.status(HttpStatus.NOT_FOUND_404);

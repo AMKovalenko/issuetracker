@@ -7,6 +7,7 @@ import java.util.Date;
 @Entity
 @Table(name = "ISSUE", schema = "PUBLIC", catalog = "TEST")
 public class Issue {
+
     private Integer id;
     private String title;
     private String state;
@@ -78,9 +79,8 @@ public class Issue {
     }
 
     public void setCommentsById(Collection<Comment> commentsById) {
-        for (Comment comment : commentsById) {
-            comment.setIssuesByIssueid(this);
-        }
+
+        commentsById.forEach(comment -> comment.setIssuesByIssueid(this));
         this.commentsById = commentsById;
     }
 

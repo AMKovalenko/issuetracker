@@ -1,28 +1,18 @@
 #macro(mainLayout)
 <html>
 <head>
-
     <link rel="shortcut icon" href="/logo.png" />
     <title>$msg.get("COMMON_TITLE")</title>
     <link rel="stylesheet" href="/main.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<form id="loginForm"  action="/logout/" method="post">
-    #if($currentUser)
-        <input type="hidden" name="currentUser" value="$currentUser">
-        <input type="submit" value="$msg.get("COMMON_NAV_LOGOUT")"/>
-    #end
-</form>
+
 <main>
     <div id="content">
-    #if($failedMessage)
-        <p class="bad notification">$failedMessage</p>
-    #end
         $bodyContent
     </div>
 </main>
-
 <footer>
     $msg.get("COMMON_FOOTER_TEXT")
 </footer>

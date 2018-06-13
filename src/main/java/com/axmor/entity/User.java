@@ -1,17 +1,27 @@
 package com.axmor.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "USER", schema = "PUBLIC", catalog = "TEST")
 public class User {
+
     private int userid;
     private String username;
-    private String password;
+    private String hashedPassword;
+    private String salt;
+
+    public User() {
+    }
+
+    public User(String username, String hashedPassword, String salt) {
+        this.username = username;
+        this.hashedPassword = hashedPassword;
+        this.salt = salt;
+    }
 
     @Id
+    @GeneratedValue
     @Column(name = "USERID", nullable = false)
     public int getUserid() {
         return userid;
@@ -22,7 +32,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "USERNAME", nullable = false, length = 255)
+    @Column(name = "USERNAME", nullable = false)
     public String getUsername() {
         return username;
     }
@@ -32,13 +42,23 @@ public class User {
     }
 
     @Basic
-    @Column(name = "PASSWORD", nullable = false, length = 255)
-    public String getPassword() {
-        return password;
+    @Column(name = "HASHED_PASSWORD", nullable = false)
+    public String getHashedPassword() {
+        return hashedPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    @Basic
+    @Column(name = "SALT", nullable = false)
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     @Override
@@ -50,7 +70,9 @@ public class User {
 
         if (userid != user.userid) return false;
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
-        if (password != null ? !password.equals(user.password) : user.password != null) return false;
+        if (hashedPassword != null ? !hashedPassword.equals(user.hashedPassword) : user.hashedPassword != null)
+            return false;
+        if (salt != null ? !salt.equals(user.salt) : user.salt != null) return false;
 
         return true;
     }
@@ -59,7 +81,18 @@ public class User {
     public int hashCode() {
         int result = userid;
         result = 31 * result + (username != null ? username.hashCode() : 0);
-        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (hashedPassword != null ? hashedPassword.hashCode() : 0);
+        result = 31 * result + (salt != null ? salt.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userid=" + userid +
+                ", username='" + username + '\'' +
+                ", hashedPassword='" + hashedPassword + '\'' +
+                ", salt='" + salt + '\'' +
+                '}';
     }
 }

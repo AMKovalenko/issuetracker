@@ -1,0 +1,21 @@
+#parse("/velocity/loginLayout.vm")
+#@mainLayout()
+<form id="loginForm" method="post">
+    #if($registerFailedMessage)
+        <p class="bad notification">$registerFailedMessage</p>
+    #elseif($registerFailed)
+        <p class="bad notification">$msg.get("REGISTER_FAILED")</p>
+    #end
+    <h1>$msg.get("REGISTER_HEADING")</h1>
+    <p>$msg.get("REGISTER_INSTRUCTIONS")</p>
+    <label>$msg.get("REGISTER_LABEL_USERNAME")</label>
+    <input type="text" name="username" placeholder="$msg.get("REGISTER_LABEL_USERNAME")" value="" required>
+    <label>$msg.get("REGISTER_LABEL_PASSWORD")</label>
+    <input type="password" name="password" placeholder="$msg.get("REGISTER_LABEL_PASSWORD")" value="" required>
+    #if($registerRedirect)
+        <input type="hidden" name="registerRedirect" value="$registerRedirect">
+    #end
+    <input type="submit" value="$msg.get("REGISTER_BUTTON_REGISTER")">
+
+</form>
+#end
