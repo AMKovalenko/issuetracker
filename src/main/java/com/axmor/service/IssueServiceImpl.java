@@ -1,7 +1,7 @@
 package com.axmor.service;
 
+import com.axmor.dao.IssueDaoImpl;
 import com.axmor.util.DBService;
-import com.axmor.util.DaoFactory;
 import com.axmor.dao.IssueDao;
 import com.axmor.entity.Issue;
 import com.axmor.util.LoggingUtils;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class IssueServiceImpl implements IssueService {
 
-    private IssueDao issueDao = DaoFactory.getIssueDAOInstance();
+    private IssueDao issueDao = new IssueDaoImpl();
 
     private final static Logger logger = LoggerFactory.getLogger(IssueServiceImpl.class);
 

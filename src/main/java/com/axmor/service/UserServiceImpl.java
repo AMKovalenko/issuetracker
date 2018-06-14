@@ -1,7 +1,7 @@
 package com.axmor.service;
 
+import com.axmor.dao.UserDaoImpl;
 import com.axmor.util.DBService;
-import com.axmor.util.DaoFactory;
 import com.axmor.dao.UserDao;
 import com.axmor.entity.User;
 import com.axmor.util.LoggingUtils;
@@ -16,7 +16,7 @@ import javax.persistence.NoResultException;
 
 public class UserServiceImpl implements UserService{
 
-    private UserDao userDao = DaoFactory.getUserDaoInstance();
+    private UserDao userDao = new UserDaoImpl();
 
     private final static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 

@@ -1,8 +1,8 @@
 package com.axmor.service;
 
 import com.axmor.dao.CommentDao;
+import com.axmor.dao.CommentDaoImpl;
 import com.axmor.util.DBService;
-import com.axmor.util.DaoFactory;
 import com.axmor.entity.Comment;
 import com.axmor.util.LoggingUtils;
 import org.hibernate.HibernateException;
@@ -14,7 +14,7 @@ import javax.persistence.NoResultException;
 
 public class CommentServiceImpl implements CommentService {
 
-    private CommentDao commentDao = DaoFactory.getCommentDAOInstance();
+    private CommentDao commentDao = new CommentDaoImpl();
 
     private final static Logger logger = LoggerFactory.getLogger(CommentServiceImpl.class);
 
