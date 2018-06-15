@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 
 @Entity
-@Table(name = "ISSUE", schema = "PUBLIC", catalog = "TEST")
+@Table(name = "ISSUE", schema = "PUBLIC")
 public class Issue {
 
     private Integer id;

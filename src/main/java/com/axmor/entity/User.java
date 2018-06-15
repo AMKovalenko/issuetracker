@@ -3,7 +3,7 @@ package com.axmor.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "USER", schema = "PUBLIC", catalog = "TEST")
+@Table(name = "USER", schema = "PUBLIC")
 public class User {
 
     private int userid;

@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "COMMENT", schema = "PUBLIC", catalog = "TEST")
+@Table(name = "COMMENT", schema = "PUBLIC")
 public class Comment {
     private Integer id;
     private Date creationdate;
