@@ -29,6 +29,8 @@ public class Application {
         staticFiles.location("/public");
         staticFiles.expireTime(600L);
 
+        redirect.get(Path.Web.INDEX,    Path.Web.LOGIN);
+
         get(Path.Web.ISSUES,            IssueController.fetchAllIssues);
         post(Path.Web.ISSUE,            IssueController.createIssue);
         get(Path.Web.ISSUE,             IssueController.createIssuePage);

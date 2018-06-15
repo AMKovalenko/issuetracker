@@ -17,6 +17,7 @@ public class Path {
      * Storage for paths for creation links.
      */
     public interface Web {
+        String INDEX = "/";
         String LOGIN = "/login/";
         String REGISTER = "/register/";
         String LOGOUT = "/logout/";
